@@ -9,12 +9,14 @@ import { createServer } from "node:http";
 dotenv.config();
 
 const port = process.env.PORT ?? 4000;
+const corsOrigin = process.env.NODE_ENV !== 'development' ? process.env.CORS_ORIGIN : 'http://localhost:3000'
+console.log(corsOrigin)
 
 const app = express();
 const server = createServer(app);
 const io = new Server(server, {
   connectionStateRecovery: {},
-  cors: { origin: "https://filmlibrary-omega.vercel.app" },
+  cors: { origin: corsOrigin },
 });
 
 const db = createClient({
